@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-import getAppointmentsForDay from "helpers/selectors";
-
 export default function useApplicationData() {
   const [state, setState] = useState({
     day: 'Monday',
@@ -26,7 +24,10 @@ export default function useApplicationData() {
   }, []);
 
 
+
+
   function bookInterview(id, interview) {
+    // Create new appt and appt state using shallow copies
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -35,46 +36,20 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    let day = getDay(id);
-    let newDay = { ...day, spots: day.spots - 1 };
-    let newDays = state.days;
-    for (let i = 0; i < state.days.length; i++) {
-      if (state.days[i].appointments.includes(id)) {
-        newDays.splice(i, 1, newDay);
-      }
-    }
+
+    // Give the state days but the updated appointments so they can both be updated at the same time.
+    const days = updateSpots(state.day, state.days, appointments);
+
     return axios.put(`/api/appointments/${id}`, { interview })
       .then((res) => {
-        setState({ ...state, appointments, days: newDays });
-        // spotsRemaining(id);?????
+        // Shallow copy the state with updated appts and days
+        setState({ ...state, appointments, days });
       })
   }
 
 
-  // function cancelInterview(id) {
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: null
-  //   };
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment
-  //   };
-  //   let day = getDay(id);
-  //   let newDay = { ...day, spots: day.spots + 1 };
-  //   let newDays = state.days;
-  //   for (let i = 0; i < state.days.length; i++) {
-  //     if (state.days[i].appointments.includes(id)) {
-  //       newDays.splice(i, 1, newDay);
-  //     }
-  //   }
-  //   return axios.delete(`/api/appointments/${id}`)
-  //     .then((res) => {
-  //       setState({ ...state, appointments, days: newDays });
-  //     })
-  // }
-
   function cancelInterview(id) {
+    // Set target appt's interview to null
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -83,74 +58,37 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    let day = getDay(id);
-    let newDay = { ...day, spots: day.spots + 1 };
-    let newDays = state.days;
-    for (let i = 0; i < state.days.length; i++) {
-      if (state.days[i].appointments.includes(id)) {
-        newDays.splice(i, 1, newDay);
-      }
-    }
+    
+    // See bookInterview for comments on below
+    const days = updateSpots(state.day, state.days, appointments);
+
     return axios.delete(`/api/appointments/${id}`)
       .then((res) => {
-        setState({ ...state, appointments, days: newDays });
+        setState({ ...state, appointments, days });
       })
   }
 
 
-
-  function updateSpots2(dayName, days, appointments) {
-    let spots = 0;
+  // Helper - calculate the number of spots remaining given a day name and days/appointments states, used in book/cancel interview
+  function updateSpots(dayName, days, appointments) {
+    let newSpots = 0;
 
     for (let i = 0; i < days.length; i++) {
       if (days[i].name === dayName) {
-        for (const appointment in appointments) {
-          if (appointment)
+        for (const appointment of days[i].appointments) {
+          if (!appointments[appointment].interview) {
+            newSpots ++;
+          }
         }
+
+        const newDay = {...days[i], spots: newSpots};
+        const newDays = [...days];
+        // Use loop index to splice in the new day, since no keys available to target
+        newDays.splice(i, 1, newDay);
+        return newDays;
       }
     }
   }
-
-
-
-
-
-
-  function getDay(id) {
-    return state.days.filter(day => day.appointments.includes(id))[0];
-  }
-
-  function getDayName(id) {
-    return state.days.filter(day => day.appointments.includes(id))[0].name;
-  }
-
-  function updateSpots(dayName, days, appointments) {
-    let dayAppointments = [];
-    let selectedDay = {}
-    for (const day of days) {
-      if (day.name === dayName) {
-        selectedDay = day;
-      }
-    }
-
-    dayAppointments = selectedDay.appointments;
-    let spotCounter = 0;
-
-    for (const appointment in appointments) {
-      if (dayAppointments.includes(appointments[appointment].id) && !appointments[appointment].interview) {
-        spotCounter++;
-      }
-    }
-
-    const newDay = {
-      ...selectedDay,
-      spots: spotCounter
-    }
-
-    return newDay;
-  }
-
-
 
   return {
     state,
