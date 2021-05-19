@@ -1,5 +1,5 @@
+//Header used in all appt views, also used for "last" dummy appt
 import React from "react";
-
 
 export default function Header(props) {
 

@@ -1,5 +1,5 @@
+//Used to display saving or deleting status during requests
 import React from "react";
-
 
 export default function Status(props) {
 

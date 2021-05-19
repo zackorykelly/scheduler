@@ -1,5 +1,5 @@
-import React, { fragment } from "react";
-import classNames from "classnames";
+//Manages all appointment views and transitions between them accordingly
+import React from "react";
 import "components/Appointment/styles.scss";
 
 import Header from "components/Appointment/Header";
@@ -41,6 +41,7 @@ export default function Appointment(props) {
       })
   }
 
+  //All possible views for appt object
   const EMPTY = "EMPTY";
   const SHOW = "SHOW";
   const CREATE = "CREATE";
@@ -51,6 +52,7 @@ export default function Appointment(props) {
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
 
+  //Determine initial view depending on whether or not there is an interview
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );

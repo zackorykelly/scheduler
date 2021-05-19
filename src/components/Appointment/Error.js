@@ -1,5 +1,5 @@
+//Used when saving or deleting operations are unsuccessful
 import React from "react";
-
 
 export default function Error(props) {
 

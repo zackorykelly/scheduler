@@ -1,5 +1,5 @@
+//Used to display already booked appts
 import React from "react";
-
 
 export default function Show(props) {
 

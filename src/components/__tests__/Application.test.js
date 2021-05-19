@@ -7,27 +7,12 @@ import { fireEvent } from "@testing-library/react/dist";
 
 import { getByText } from "@testing-library/react"
 
-import { prettyDOM } from "@testing-library/react"
-
 import axios from "axios";
 
 afterEach(cleanup);
 
 describe("Application", () => {
-
-// it("defaults to Monady and changes the schedule when a new day is selected", () => {
-//   const { getByText } = render(<Application />);
-
-//   return waitForElement(() => getByText("Monday")).then(() => {
-//     fireEvent.click(getByText("Tuesday"));
-
-
-//     expect(getByText("Leopold Silvers")).toBeInTheDocument();
-//   });
-// });
-
-
-//Modified version of above using async/await syntax
+//Modified version test using async/await syntax
 it("changes the schedule when a new day is selected", async () => {
   const { getByText } = render(<Application />);
 
@@ -62,10 +47,6 @@ it("loads data, books an interview and reduces the spots remaining for the first
 
   const Monday = getAllByTestId(container, "day").find(day => queryByText(day, "Monday"));
   expect(getByText(Monday, "no spots remaining")).toBeInTheDocument();
-
-
-  // console.log(prettyDOM(Monday));
-  // debug()
 });
 
 it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {

@@ -1,3 +1,4 @@
+//Mock data and axios functions to be used in feature testing
 const fixtures = {
   days: [
     {

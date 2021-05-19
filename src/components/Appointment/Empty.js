@@ -1,3 +1,4 @@
+//Used for empty appointment slots
 import React from "react";
 
 

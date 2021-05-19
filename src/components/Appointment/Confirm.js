@@ -1,3 +1,4 @@
+//Used when confirming the deletion of an appointment
 import React from "react";
 import Button from "components/Button"
 
