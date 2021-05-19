@@ -26,6 +26,7 @@ export default function useApplicationData() {
       };
       webSocket.onmessage = function (event) {
         const data = JSON.parse(event.data);
+        console.log(data);
       }
     })
   }, []);
