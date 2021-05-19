@@ -1,3 +1,4 @@
+//Handle all app state logic using custom hook
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -20,20 +21,8 @@ export default function useApplicationData() {
       axios.get('/api/interviewers')
     ]).then((all) => {
       setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }))
-      const webSocket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-      webSocket.onopen = function (event) {
-        webSocket.send('ping');
-      };
-      webSocket.onmessage = function (event) {
-        const data = JSON.parse(event.data);
-        console.log(data);
-      }
     })
   }, []);
-
-
-
-
 
 
   function bookInterview(id, interview) {
@@ -46,6 +35,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
+
 
     // Give the state days but the updated appointments so they can both be updated at the same time.
     const days = updateSpots(state.day, state.days, appointments);

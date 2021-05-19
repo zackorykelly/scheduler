@@ -38,6 +38,7 @@ const getInterviewersForDay = (state, day) => {
   return result;
 }
 
+
 const getInterviewerByID = (state, id) => {
   for (const interviewer in state.interviewers) {
     if (Number(interviewer) === id) {
@@ -46,6 +47,7 @@ const getInterviewerByID = (state, id) => {
   }
 }
 
+//Create formatted interview object
 const getInterview = (state, interview) => {
   if (!interview) {
     return null;

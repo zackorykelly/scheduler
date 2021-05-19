@@ -1,3 +1,4 @@
+//Handles the changes of state for the appointment component, using transitions and history
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
