@@ -21,3 +21,9 @@ npm test
 ```sh
 npm run storybook
 ```
+
+!["Main page"](https://github.com/zackorykelly/scheduler/blob/master/docs/main-screen.png?raw=true)
+
+!["Appointment form screen"](https://github.com/zackorykelly/scheduler/blob/master/docs/appointment-form.png?raw=true)
+
+!["Appointment cancel confirmation"](https://github.com/zackorykelly/scheduler/blob/master/docs/delete-confirmation.png?raw=true)
