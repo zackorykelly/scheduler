@@ -1,3 +1,4 @@
+//Used to book/cancel/edit appts
 import React, { useState } from "react";
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
@@ -20,6 +21,7 @@ export default function Form(props) {
     props.onCancel()
   }
 
+  //Validation to prevent user from submitting with empty student name. Clears error on resubmit.
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
@@ -42,9 +44,6 @@ export default function Form(props) {
             value={name}
             onChange={(event) => setName(event.target.value)}
             data-testid="student-name-input"
-          /*
-            This must be a controlled component
-          */
           />
           <section className="appointment__validation">{error}</section>
         <InterviewerList interviewers={props.interviewers} value={interviewer} onChange={setInterviewer} />

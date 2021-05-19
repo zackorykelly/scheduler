@@ -1,3 +1,4 @@
+//Used in form to display available interviewers
 import React from "react";
 import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewerList.scss";
@@ -9,8 +10,6 @@ InterviewerList.propTypes = {
 };
 
 export default function InterviewerList(props) {
-  
- 
 
   const interviewers = props.interviewers.map(interviewer => {
     return <InterviewerListItem
@@ -20,7 +19,6 @@ export default function InterviewerList(props) {
       selected={interviewer.id === props.value}
       onChange={event => props.onChange(interviewer.id)} />
   })
-
 
   return (
     <section className="interviewers">

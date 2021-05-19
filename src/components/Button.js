@@ -1,3 +1,4 @@
+//Main button component used throughout app
 import React from "react";
 import classNames from "classnames";
 import "components/Button.scss";

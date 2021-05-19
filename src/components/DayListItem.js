@@ -1,7 +1,7 @@
+//Individual day items for daylist menu
 import React from "react";
 import classNames from "classnames";
 import "components/DayListItem.scss";
-
 
 export default function DayListItem(props) {
 
